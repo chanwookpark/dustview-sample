@@ -1,0 +1,54 @@
+{
+    "shop": {
+        "shopId": "s001",
+        "shopName": "MC매장메인",
+        "pageid": "p001"
+    },
+    "tiles": [
+        {
+            "tileID": "t001",
+            "tileName": "상품강조형",
+            "tileType": "PRD.ONLY",
+            "templateKey": "t001",
+            "units": {
+                "products": [
+                    {
+                        "unitType": "PRD",
+                        "prdId": "1001",
+                        "prdName": "맥북프로",
+                        "salePrice": "1500000",
+                        "cardDiscountPrice": "1200000"
+                    },
+                    {
+                        "unitType": "PRD",
+                        "prdId": "1002",
+                        "prdName": "아이폰",
+                        "salePrice": "8000000",
+                        "cardDiscountPrice": "7000000"
+                    }
+                ],
+                "banners": [
+                    {
+                        "bannerType": "BIG",
+                        "imageUrl": "http://..../image.png"
+                    }
+                ],
+                "copy": [
+                    {
+                        "text": "신학기 주목 상품!",
+                        "images": [
+                            {
+                                "size": "BIG",
+                                "url": "http://.../image_big.png"
+                            },
+                            {
+                                "size": "THUMBNAIL",
+                                "url": "http://.../image_th.png"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}

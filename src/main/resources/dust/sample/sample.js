@@ -1,0 +1,1 @@
+(function(){dust.register("test1",body_0);function body_0(chk,ctx){return chk.write("Hello World!");}return body_0;})();
