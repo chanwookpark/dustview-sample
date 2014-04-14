@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>dust</title>
+		<link href="script/style.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="script/ecma.js"></script>
+		<script type="text/javascript" src="lib/jquery.min.js"></script>
+		<script type="text/javascript" src="script/jsdump.js"></script>
+		<script type="text/javascript" src="script/beautify.js"></script>
+		<script type="text/javascript" src="lib/dust-full.min.js"></script>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/dustjs.helpers/1.1.1/dust-helpers-1.1.1.js"></script>
+		<!--<script type="text/script" src="script/coreTests.js"></script>-->
+		<!--<script type="text/script" src="script/helpersTests.js"></script>-->
+		<script type="text/javascript" src="script/dustGuideTests.js"></script>
+		<script type="text/javascript" src="script/test.js"></script>
+	</head>
+	<body>
+		<div id="dust" class="content">
+			<div class="left">
+				<div class="col1">
+					<p>1. 템플릿을 고르세요.
+						<span id="select-group"></span>
+						<span id="select-test"></span> 또는 하단에 직접 템플릿을 정의하세요.:
+					</p>
+					<textarea id="input-source" class="console"></textarea>
+					<div class="status ok">
+						<i class="icon davinci-selectable"></i> Ready
+					</div>
+					<p> 2. 컴파일된 템플릿이 등록됩니다.: </p>
+					<pre class="console"><code id="output-js"></code></pre>
+				</div>
+				<div class="col2">
+					<p>3. 모델을 정의합니다. :</p>
+		  		<textarea id="input-context" class="console"></textarea>
+					<div class="status ok">
+			  		<i class="icon davinci-selectable" data-davinci="icon"></i> Ready
+					</div>
+					<p>4. 모델과, 템플릿을 결합하여 렌더링 합니다. :</p>
+					<pre id="output-text" class="console"></pre>
+				</div>
+			</div>
+		</div>
+		<script src="script/hijs.js"></script>
+	</body>
+</html>

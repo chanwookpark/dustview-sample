@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<textarea class="ta-dust-template" style="width:400px;height:500px">
+{#users}
+	{#john}
+	john id : {id}, telno : {telno}
+	{/john}{~n}
+	larry의 id는 {larry.id}
+{/users}
+
+</textarea>
+
+<textarea class="ta-dust-model" style="width:400px;height:500px">
+
+</textarea>
+
+<textarea class="ta-dust-result" style="width:400px;height:500px">
+
+</textarea>
+
+<script src="//rawgit.com/linkedin/dustjs/master/dist/dust-full.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+	$(".ta-dust-template, .ta-dust-model").on("change",function(){
+		var demo = dust.compile($(".ta-dust-template").val(), "demo");
+		dust.loadSource(demo);
+
+		dust.render(demo, JSON.parse($(".ta-dust-model").val()), function(err, out){
+			$(".ta-dust-result").text(out);
+			console.log(out);
+		});
+	});
+	var aa = {
+		"users": {
+			"john" : {
+				"id" : "john0124",
+				"password" : "asdf12",
+				"telno" : "010-1234-1234"
+			},
+			"larry" : {
+				"id" : "cutecatholic",
+				"password" : "asdf12",
+				"telno" : "010-1234-1234"
+			}
+		}
+	}
+</script>
+</body>
+</html>
