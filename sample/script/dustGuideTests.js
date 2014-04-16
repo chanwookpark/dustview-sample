@@ -1,16 +1,11 @@
 var dustGuideTests = [
     {
-        name: "Dust Core",
-        tests: []
-    },
-    {
         name: "Dust Core - 참조태그 {name}",
         tests: [
             {
                 name: "참조 기본",
                 source: '{hello}',
-                context: {"hello": "Hello, World!"},
-                expected: "Hello, World!"
+                context: {"hello": "Hello, World!"}
             },
             {
                 name: "참조를 사용하여 표현할 수 있는 형식",
@@ -184,7 +179,7 @@ var dustGuideTests = [
                     },
                     "a": [1, 2, 3, 4, 5]
                 }
-            },
+            }
         ]
     },
     {
@@ -241,18 +236,222 @@ var dustGuideTests = [
                 })(),
                 context: {
                     "booleanTrue": true,
-                    "zero" : 0,
-                    "num" : 123.1,
-                    "existStr" : "test",
-                    "existObject" : {a : "asdf"},
-                    "emptyObj" : {},
-                    "existArray" : [],
-                    "booleanFalse" : false,
-                    "undefinedObj" : undefined,
-                    "nullObj" : null,
-                    "emptyStr" :"",
-                    "emptyArr" : []
+                    "zero": 0,
+                    "num": 123.1,
+                    "existStr": "test",
+                    "existObject": {a: "asdf"},
+                    "emptyObj": {},
+                    "existArray": [],
+                    "booleanFalse": false,
+                    "undefinedObj": undefined,
+                    "nullObj": null,
+                    "emptyStr": "",
+                    "emptyArr": []
                 }
+            },
+            {
+                name: "else문 사용법 {:else}",
+                source: "로그인 여부 : {?isLogin}로그인 상태{:else}로그아웃 상태{/isLogin}",
+                context: {
+                    "isLogin": false
+                }
+            },
+            {
+                name: "else문 사용법 {:else} (섹션 태그에서 사용)",
+                source: "{#friends}{.}{:else}친구가없습니다.{/friends}",
+                context: {
+                    "friends": []
+                }
+            }
+        ]
+    },
+    {
+        name: "Dust Helper - Select {@select}",
+        tests: [
+            {
+                name: "Select helper 기본",
+                source: (function () {
+                    var str = "";
+                    str += "select문에는 key를 하위 조건 helper에서 value와 비교한다.\n";
+                    str += "{@select key=\"{foo}\"}\n";
+                    str += "  {@eq value=\"bar\"}bar{/eq}\n";
+                    str += "{/select}";
+                    return str;
+                })(),
+                context: {
+                    "foo": "bar"
+                }
+            }
+            ,
+            {
+                name: "Select helper default helper 사용",
+                source: (function () {
+                    var str = "";
+                    str += "{@select key=\"{foo}\"}\n";
+                    str += "  {@eq value=\"bar\"}bar{/eq}\n";
+                    str += "  {@eq value=\"bar\"}bar{/eq}\n";
+                    str += "  {@default}default는 모든 상위 조건문이 통과되었을 경우 출력{/default}\n";
+                    str += "{/select}";
+                    return str;
+                })(),
+                context: {
+                    "foo": "default"
+                }
+            },
+            {
+                name: "Select helper 다양한 조건 helper 사용",
+                source: (function () {
+                    var str = "";
+                    str += "{@select key=\"{foo}\"}\n";
+                    str += "  {@eq value=\"bar\"}key와 동일할 경우 선택{/eq}\n";
+                    str += "  {@ne value=\"bar\"}key와 동일하지 않을 경우 선택{/ne}\n";
+                    str += "  {@lt value=\"bar\"}key속성이 value보다 작을경우{/lt}\n";
+                    str += "  {@default}상위 조건문들이 선택되지 않았을 경우 선택{/default}\n";
+                    str += "{/select}";
+                    return str;
+                })(),
+                context: {
+                    "foo": "default"
+                }
+            }
+        ]
+    },
+    {
+        name: "Dust Helper - 조건 helper {@eq}, {@ne}, {@lt}.....",
+        tests: [
+            {
+                name: "key == value  {@eq}",
+                source: (function () {
+                    var str = "";
+                    str += "{@eq key=\"{foo}\" value=\"bar\"}key와 value가 같을 경우{/eq}\n";
+                    return str;
+                })(),
+                context: {
+                    "foo": "bar"
+                }
+            },
+            {
+                name: "key != value  {@ne}",
+                source: (function () {
+                    var str = "";
+                    str += "{@ne key=\"{foo}\" value=\"var\"}key와 value가 같지 않을 경우{/ne}\n";
+                    str += "";
+                    return str;
+                })(),
+                context: {
+                    "foo": "bar"
+                }
+            },
+            {
+                name: "key > value  {@gt}",
+                source: (function () {
+                    var str = "";
+                    str += "{@gt key=\"{foo}\" value=5}key가 value 보다 클 경우{/gt}\n";
+                    str += "";
+                    return str;
+                })(),
+                context: {
+                    "foo": 12
+                }
+            },
+            {
+                name: "key >= value  {@gte}",
+                source: (function () {
+                    var str = "";
+                    str += "{@gte key=\"{foo}\" value=5}key가 value 보다 크거나 같을 경우{/gte}\n";
+                    str += "";
+                    return str;
+                })(),
+                context: {
+                    "foo": 12
+                }
+            },
+            {
+                name: "key < value  {@lt}",
+                source: (function () {
+                    var str = "";
+                    str += "{@lt key=\"{foo}\" value=20}key가 value 보다 작을 경우{/lt}\n";
+                    str += "";
+                    return str;
+                })(),
+                context: {
+                    "foo": 12
+                }
+            },
+            {
+                name: "key <= value  {@lte}",
+                source: (function () {
+                    var str = "";
+                    str += "{@lte key=\"{foo}\" value=20}key가 value 보다 작을 경우{/lte}\n";
+                    str += "";
+                    return str;
+                })(),
+                context: {
+                    "foo": 12
+                }
+            },
+            {
+                name: "조건 helper와 else 같이 사용하기",
+                source: (function () {
+                    var str = "";
+                    str += "{@eq key=\"{foo}\" value=\"bar\"}\n  key == value\n{:else}\n  key와 value는 같지 않음\n{/eq}\n";
+                    return str;
+                })(),
+                context: {
+                    "foo": "notSame"
+                }
+            }
+        ]
+    }
+    ,
+    {
+        name: "Dust Helper - math helper {@math}",
+        tests: [
+            {
+                name: "math helper 기본",
+                source: (function () {
+                    var str = "";
+                    str += '16 + 4 : {@math key="16" method="add" operand="4"/}{~n}\n';
+                    str += '16 - 4 :  {@math key="16" method="subtract" operand="4"/}{~n}\n';
+                    str += '16.5 버림 : {@math key="16.5" method="floor"/}{~n}\n';
+                    str += '16.5 올림 : {@math key="16.5" method="ceil"/}{~n}\n';
+                    str += '16.5 반올림 : {@math key="16.5" method="round"/}{~n}\n';
+                    str += '-8의 절대값 : {@math key="-8" method="abs"/}{~n}\n';
+                    str += '3 / 2의 나머지 : {@math key="3" method="mod" operand="2"/}{~n}\n';
+                    return str;
+                })(),
+                context: {}
+            },
+            {
+                name: "{@math} helper를 조건 helper와 함께 사용하기.",
+                source: (function () {
+                    var str = "";
+                    str += '{@math key="16" method="add" operand="4"}\n';
+                    str += '  {@eq value=12}결과는 12입니다.{/eq}\n';
+                    str += '  {@eq value=20}결과는 20입니다.{/eq}\n';
+                    str += '  {@default}결과를 찾을 수 없습니다.{/default}\n';
+                    str += '{/math}\n';
+                    return str;
+                })(),
+                context: {}
+            }
+        ]
+    },
+    {
+        name: "Dust Helper - if helper{@if cond=\"condition\"}",
+        tests: [
+            {
+                name: "{@math} helper를 조건 helper와 함께 사용하기.",
+                source: (function () {
+                    var str = "";
+                    str += '{@math key="16" method="add" operand="4"}\n';
+                    str += '  {@eq value=12}결과는 12입니다.{/eq}\n';
+                    str += '  {@eq value=20}결과는 20입니다.{/eq}\n';
+                    str += '  {@default}결과를 찾을 수 없습니다.{/default}\n';
+                    str += '{/math}\n';
+                    return str;
+                })(),
+                context: {}
             }
         ]
     }
