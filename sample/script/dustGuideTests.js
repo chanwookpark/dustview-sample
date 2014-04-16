@@ -441,19 +441,111 @@ var dustGuideTests = [
         name: "Dust Helper - if helper{@if cond=\"condition\"}",
         tests: [
             {
-                name: "{@math} helper를 조건 helper와 함께 사용하기.",
+                name: "if 조건문 사용하기",
                 source: (function () {
                     var str = "";
-                    str += '{@math key="16" method="add" operand="4"}\n';
-                    str += '  {@eq value=12}결과는 12입니다.{/eq}\n';
-                    str += '  {@eq value=20}결과는 20입니다.{/eq}\n';
-                    str += '  {@default}결과를 찾을 수 없습니다.{/default}\n';
-                    str += '{/math}\n';
+                    str += "{@if cond=\" 'a' == 'a' \"}\n";
+                    str += "  조건이 true로 평가되었습니다.\n";
+                    str += "{/if}\n";
+                    str += "{@if cond=\" 'a' == 'b' \"}\n";
+                    str += "  정상처리되지 않음.\n";
+                    str += "{/if}";
                     return str;
                 })(),
                 context: {}
+            },
+            {
+                name: "if 조건문 else와 함께 사용하기",
+                source: (function () {
+                    var str = "";
+                    str += "{@if cond=\" 'a' == 'b' \"}\n";
+                    str += "  조건이 true로 평가되었습니다.\n";
+                    str += "{:else}\n";
+                    str += "  조건이 false로 평가되었습니다.\n";
+                    str += "{/if}";
+                    return str;
+                })(),
+                context: {}
+            },
+            {
+                name: "if 조건문에서 모델을 참조하기",
+                source: (function () {
+                    var str = "";
+                    str += "{@if cond=\" '{foo}' === 'bar' \"}\n";
+                    str += "  조건이 true로 평가되었습니다.\n";
+                    str += "{/if}\n";
+                    return str;
+                })(),
+                context: {
+                    "foo": "bar"
+                }
+            },
+            {
+                name: "if 조건 helper에 동시에 여러 비교문 실행하기",
+                source: (function () {
+                    var str = "";
+                    str += "{@if cond=\"{foo}==='bar'\"}\n";
+                    str += "  조건이 true로 평가되었습니다.\n";
+                    str += "{/if}\n";
+                    return str;
+                })(),
+                context: {
+                    "foo": "bar"
+                }
+            },
+            {
+                name: "if를 최대한 사용하지 말아야 하는 이유",
+                source: (function () {
+                    var str = "";
+                    str += "{@if cond=\"{foo}==='bar'\"}foo === bar??{~n}{/if}\n";
+                    str += "{@if cond=\"{baz}===''\"}baz === \"\"{/if}\n";
+                    str += "추가필요. 성능에 대한 이야기는 어떻게??";
+
+                    return str;
+                })(),
+                context: {
+                    "foo": "bar",
+                    "baz": "qux"
+                }
             }
         ]
+    },
+    {
+        name: "Dust Helper - 기타 주요 헬퍼",
+        tests: [
+            {
+                name: "separator helper {@sep}",
+                source: "{#friends}{.}{@sep}, {/sep}{/friends}",
+                context: {
+                    "friends": ["홍진호", "임요환", "강민", "박성준"]
+                }
+            },
+            {
+                name: "size helper {@size}",
+                source: "Size of friends is.... {@size key=friends/}",
+                context: {
+                    "friends": ["홍진호", "임요환", "강민", "박성준"]
+                }
+            },
+            {
+                name: "context dump helper {@contextDump}",
+                source: "{@contextDump/}",
+                context: {
+                    "a": "a",
+                    "b": "b",
+                    "c": {
+                        "a": "b",
+                        "b": [1, 2],
+                        "c": {
+                            "d": "e",
+                            "f": "g"
+                        }
+                    },
+                    "d": [6, 7]
+                }
+            }
+        ]
+
     }
 ];
 
