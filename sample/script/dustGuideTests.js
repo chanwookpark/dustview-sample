@@ -1,5 +1,16 @@
 var dustGuideTests = [
     {
+        name: "연습장",
+        tests: [
+            {
+                name: "연습장",
+                source: "",
+                context: {}
+            }
+        ]
+
+    },
+    {
         name: "Dust Core - 참조태그 {name}",
         tests: [
             {
