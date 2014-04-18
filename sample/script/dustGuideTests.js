@@ -1,3 +1,11 @@
+{
+    userList : [
+        "Bob",
+        "Steve",
+        "Tony"
+    ]
+}
+
 var dustGuideTests = [
     {
         name: "연습장",
@@ -6,6 +14,113 @@ var dustGuideTests = [
                 name: "연습장",
                 source: "",
                 context: {}
+            },
+            {
+                name: "demo01",
+                source: "",
+                context: {
+                    "users": [
+                        {
+                            "name": "John",
+                            "id": "john0124",
+                            "telno": "010-1234-1234",
+                            "friends" : ["aa", "bb", "cc"]
+                        },
+                        {
+                            "name": "Steve",
+                            "id": "magician",
+                            "telno": "010-1234-1234",
+                            "friends" : ["Harry", "Ronald", "Hermione"]
+                        }
+                    ]
+                }
+            },
+            {
+                name: "demo01 결과",
+                source: "{#users}\n이름 : {name}{~n}\nid : {id}{~n}\n친구 목록 : {#friends}{.} {/friends}{~n}\n{~n}\n{/users}",
+                context: {
+                    "users": [
+                        {
+                            "name": "John",
+                            "id": "john0124",
+                            "telno": "010-1234-1234",
+                            "friends" : ["aa", "bb", "cc"]
+                        },
+                        {
+                            "name": "Steve",
+                            "id": "magician",
+                            "telno": "010-1234-1234",
+                            "friends" : ["Harry", "Ronald", "Hermione"]
+                        }
+                    ]
+                }
+            },
+            {
+                name: "demo02",
+                source: "",
+                context: {
+                    friends : ["Harry", "Ronald", "Hermione"],
+                    onlineFriends : []
+                }
+            }, {
+                name: "demo02 결과",
+                source: "{?friends}\n  {#friends}{.} {/friends}{~n}\n{:else}\n  친구가 없습니다.\n{/friends}\n{?onlineFriends}\n  {#onlineFriends}{.} {/onlineFriends}\n{:else}\n  접속한 친구가 없습니다.\n{/onlineFriends}",
+                context: {
+                    friends : ["Harry", "Ronald", "Hermione"],
+                    onlineFriends : []
+                }
+            },  {
+                name: "demo03",
+                source: "",
+                context: {
+                    "foo": "bar"
+                }
+            }, {
+                name: "demo03 결과",
+                source: "{@eq key=\"{foo}\" value=\"bar\"}\n            key와 value가 같음\n{/eq}",
+                context: {
+                    "foo": "bar"
+                }
+            }, {
+                name: "demo04",
+                source: "",
+                context: {
+                    "foo": "bar"
+                }
+            }, {
+                name: "demo04 결과",
+                source: (function () {
+                    var str = "";
+                    str += "{@select key=\"{foo}\"}\n";
+                    str += "  {@eq value=\"bar\"}bar{/eq}\n";
+                    str += "  {@eq value=\"baz\"}baz{/eq}\n";
+                    str += "  {@default}default 출력{/default}\n";
+                    str += "{/select}";
+                    return str;
+                })(),
+                context: {
+                    "foo": "bar"
+                }
+            },
+            {
+                name: "demo05",
+                source: "",
+                context: {
+                    "foo": "bar"
+                }
+            },
+            {
+                name: "demo05 결과",
+                source: (function () {
+                    var str = "";
+                    str += "{@if cond=\" '{foo}' === 'bar' \"}\n";
+                    str += "  조건이 true로 평가되었습니다.\n";
+                    str += "{/if}\n";
+                    return str;
+                })(),
+                context: {
+                    "foo": "bar"
+                }
             }
         ]
 
